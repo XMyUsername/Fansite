@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Todos los episodios de Shin-chan subtitulados por Joshua Plata">
+    <title>🎬 Episodios - Joshua Plata Subs</title>
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One:wght@400&family=Comic+Neue:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --joshua-red: #ff4444;
+            --joshua-yellow: #ffdd44;
+            --joshua-blue: #4488ff;
+        }
+        
+        body {
+            font-family: 'Comic Neue', cursive, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+        
+        /* Navbar */
+        .navbar {
+            background: linear-gradient(90deg, var(--joshua-red), #ff8844) !important;
+            transition: all 0.3s ease;
+        }
+        
+        .navbar-scrolled {
+            background: rgba(255, 68, 68, 0.95) !important;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+        
+        .brand-text {
+            font-family: 'Fredoka One', cursive;
+            color: white;
+            font-size: 1.4rem;
+            text-shadow: 2px 2px 0px #ffdd44;
+        }
+        
+        .nav-link {
+            color: white !important;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            background: var(--joshua-yellow) !important;
+            color: #333 !important;
+            border-radius: 20px;
+            transform: translateY(-2px);
+        }
+        
+        /* Hero Section */
+        .episodes-hero {
+            background: linear-gradient(135deg, rgba(102,126,234,0.9), rgba(118,75,162,0.9)), 
+                        url('https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=1920') center/cover;
+            color: white;
+            text-align: center;
+            padding: 6rem 0 4rem;
+        }
+        
+        .episodes-hero h1 {
+            font-family: 'Fredoka One', cursive;
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 3px 3px 0px rgba(0,0,0,0.5);
+        }
+        
+        /* Search Section */
+        .search-section {
+            background: white;
+            padding: 2rem 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .search-controls {
+            background: #f8f9fa;
+            border-radius: 20px;
+            padding: 1.5rem;
+        }
+        
+        .form-control, .form-select {
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            padding: 0.75rem 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            border-color: var(--joshua-red);
+            box-shadow: 0 0 0 0.2rem rgba(255,68,68,0.25);
+        }
+        
+        /* Episode Cards */
+        .episode-card {
+            border: none;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+            margin-bottom: 2rem;
+            background: white;
+        }
+        
+        .episode-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        
+        .episode-card .card-img-top {
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .episode-card:hover .card-img-top {
+            transform: scale(1.05);
+        }
+        
+        .episode-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .episode-card:hover .episode-overlay {
+            opacity: 1;
+        }
+        
+        .play-btn {
+            background: rgba(255,255,255,0.95);
+            border: 3px solid var(--joshua-yellow);
+            border-radius: 50px;
+            padding: 1rem 2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            transform: scale(0.8);
+        }
+        
+        .episode-card:hover .play-btn {
+            transform: scale(1);
+        }
+        
+        .play-btn:hover {
+            background: var(--joshua-yellow);
+            color: #333;
+            transform: scale(1.1);
+        }
+        
+        /* Badges */
+        .badge {
+            padding: 0.5rem 0.75rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.75rem;
+        }
+        
+        .badge.new-episode {
+            background: linear-gradient(135deg, var(--joshua-green), #27ae60);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        /* Pagination */
+        .pagination {
+            justify-content: center;
+        }
+        
+        .page-link {
+            color: var(--joshua-red);
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            margin: 0 0.25rem;
+            padding: 0.75rem 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .page-link:hover {
+            background: var(--joshua-red);
+            border-color: var(--joshua-red);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .page-item.active .page-link {
+            background: var(--joshua-red);
+            border-color: var(--joshua-red);
+        }
+        
+        /* Filters */
+        .filter-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .filter-tag {
+            background: #e9ecef;
+            color: #495057;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .filter-tag:hover,
+        .filter-tag.active {
+            background: var(--joshua-red);
+            color: white;
+            border-color: var(--joshua-yellow);
+            transform: translateY(-2px);
+        }
+        
+        /* Loading */
+        .loading-spinner {
+            display: none;
+            text-align: center;
+            padding: 3rem;
+        }
+        
+        .loading-spinner.show {
+            display: block;
+        }
+        
+        /* Stats */
+        .episodes-stats {
+            background: white;
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 1rem;
+        }
+        
+        .stat-number {
+            font-family: 'Fredoka One', cursive;
+            font-size: 2rem;
+            color: var(--joshua-red);
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            color: #7f8c8d;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .episodes-hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .search-controls {
+                padding: 1rem;
+            }
+            
+            .filter-tags {
+                justify-content: center;
+            }
+            
+            .stat-number {
+                font-size: 1.5rem;
+            }
+        }
+        
+        /* Animations */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        
+        .animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .episode-appear {
+            animation: episodeAppear 0.6s ease forwards;
+        }
+        
+        @keyframes episodeAppear {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <i class="fas fa-film fa-2x me-2 text-warning"></i>
+                <span class="brand-text">Joshua Plata Subs</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="fas fa-home me-1"></i> Inicio
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="episodios.html">
+                            <i class="fas fa-film me-1"></i> Episodios
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="acerca.html">
+                            <i class="fas fa-info-circle me-1"></i> Acerca de
+                        </a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center gap-2">
+                    <a href="#" id="adminLink" class="btn btn-outline-light btn-sm">
+                        <i class="fas fa-cog me-1"></i> Admin
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="episodes-hero">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 text-center">
+                    <h1 class="animate-on-scroll">🎬 Todos los Episodios</h1>
+                    <p class="lead animate-on-scroll">La colección completa de episodios de Shin-chan subtitulados por Joshua</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search Section -->
+    <section class="search-section">
+        <div class="container">
+            <div class="search-controls animate-on-scroll">
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 mb-3">
+                        <label class="form-label">
+                            <i class="fas fa-search me-1"></i> Buscar episodios
+                        </label>
+                        <input type="text" class="form-control" id="searchInput" placeholder="Buscar por título, descripción...">
+                    </div>
+                    <div class="col-lg-2 col-md-3 mb-3">
+                        <label class="form-label">
+                            <i class="fas fa-layer-group me-1"></i> Temporada
+                        </label>
+                        <select class="form-select" id="seasonFilter">
+                            <option value="">Todas</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-2 col-md-3 mb-3">
+                        <label class="form-label">
+                            <i class="fas fa-sort me-1"></i> Ordenar por
+                        </label>
+                        <select class="form-select" id="sortFilter">
+                            <option value="newest">Más recientes</option>
+                            <option value="oldest">Más antiguos</option>
+                            <option value="season">Por temporada</option>
+                            <option value="views">Más vistos</option>
+                            <option value="alphabetical">A-Z</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-2 col-md-6 mb-3">
+                        <label class="form-label">
+                            <i class="fas fa-eye me-1"></i> Mostrar
+                        </label>
+                        <select class="form-select" id="showFilter">
+                            <option value="all">Todos</option>
+                            <option value="featured">Destacados</option>
+                            <option value="new">Nuevos</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-2 col-md-6 mb-3">
+                        <label class="form-label">Por página</label>
+                        <select class="form-select" id="perPageFilter">
+                            <option value="12">12 episodios</option>
+                            <option value="24">24 episodios</option>
+                            <option value="48">48 episodios</option>
+                            <option value="all">Todos</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-3">
+        <div class="container">
+            <div class="episodes-stats animate-on-scroll">
+                <div class="row">
+                    <div class="col-6 col-md-3">
+                        <div class="stat-item">
+                            <div class="stat-number" id="totalEpisodes">0</div>
+                            <div class="stat-label">Total Episodios</div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="stat-item">
+                            <div class="stat-number" id="totalSeasons">0</div>
+                            <div class="stat-label">Temporadas</div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="stat-item">
+                            <div class="stat-number" id="totalViews">0</div>
+                            <div class="stat-label">Visualizaciones</div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="stat-item">
+                            <div class="stat-number" id="featuredEpisodes">0</div>
+                            <div class="stat-label">Destacados</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filter Tags -->
+    <section class="py-2">
+        <div class="container">
+            <div class="filter-tags animate-on-scroll" id="filterTags">
+                <a href="#" class="filter-tag active" data-filter="all">
+                    <i class="fas fa-th me-1"></i> Todos
+                </a>
+                <a href="#" class="filter-tag" data-filter="featured">
+                    <i class="fas fa-star me-1"></i> Destacados
+                </a>
+                <a href="#" class="filter-tag" data-filter="new">
+                    <i class="fas fa-sparkles me-1"></i> Nuevos
+                </a>
+                <a href="#" class="filter-tag" data-filter="season1">
+                    <i class="fas fa-layer-group me-1"></i> Temporada 1
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Episodes Grid -->
+    <section class="py-4">
+        <div class="container">
+            <!-- Loading Spinner -->
+            <div class="loading-spinner" id="loadingSpinner">
+                <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                    <span class="visually-hidden">Cargando...</span>
+                </div>
+                <p class="mt-3 text-muted">Cargando episodios...</p>
+            </div>
+            
+            <!-- Episodes Container -->
+            <div class="row" id="episodesContainer">
+                <!-- Los episodios se cargarán aquí dinámicamente -->
+            </div>
+            
+            <!-- Pagination -->
+            <nav aria-label="Paginación de episodios" class="mt-4">
+                <ul class="pagination" id="pagination">
+                    <!-- Paginación se generará dinámicamente -->
+                </ul>
+            </nav>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-4" style="background: linear-gradient(135deg, #2c3e50, #34495e); color: white;">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="mb-0">&copy; 2025 Joshua Plata Subs. Hecho con ❤️ para los fans de Shin-chan</p>
+                </div>
+                <div class="col-md-6 text-end">
+                    <a href="index.html" class="text-light me-3">Inicio</a>
+                    <a href="episodios.html" class="text-light me-3">Episodios</a>
+                    <a href="acerca.html" class="text-light">Acerca de</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="js/main-fixed.js"></script>
+    
+    <script>
+        // Sistema de gestión de episodios para la página
+        class EpisodesPageManager {
+            constructor() {
+                this.episodes = [];
+                this.filteredEpisodes = [];
+                this.currentPage = 1;
+                this.episodesPerPage = 12;
+                this.currentFilters = {
+                    search: '',
+                    season: '',
+                    sort: 'newest',
+                    show: 'all'
+                };
+                
+                this.init();
+            }
+            
+            init() {
+                this.loadEpisodes();
+                this.setupEventListeners();
+                this.populateFilters();
+                this.applyFilters();
+                this.setupAnimations();
+                
+                setTimeout(() => {
+                    document.getElementById('loadingSpinner').classList.remove('show');
+                }, 1000);
+            }
+            
+            loadEpisodes() {
+                try {
+                    const stored = localStorage.getItem('joshuaPlataEpisodes');
+                    this.episodes = stored ? JSON.parse(stored).filter(ep => ep.published) : [];
+                    console.log(`📺 Cargados ${this.episodes.length} episodios publicados`);
+                } catch (error) {
+                    console.error('Error cargando episodios:', error);
+                    this.episodes = [];
+                }
+            }
+            
+            setupEventListeners() {
+                // Búsqueda
+                document.getElementById('searchInput').addEventListener('input', (e) => {
+                    this.currentFilters.search = e.target.value.toLowerCase();
+                    this.applyFilters();
+                });
+                
+                // Filtros
+                document.getElementById('seasonFilter').addEventListener('change', (e) => {
+                    this.currentFilters.season = e.target.value;
+                    this.applyFilters();
+                });
+                
+                document.getElementById('sortFilter').addEventListener('change', (e) => {
+                    this.currentFilters.sort = e.target.value;
+                    this.applyFilters();
+                });
+                
+                document.getElementById('showFilter').addEventListener('change', (e) => {
+                    this.currentFilters.show = e.target.value;
+                    this.applyFilters();
+                });
+                
+                document.getElementById('perPageFilter').addEventListener('change', (e) => {
+                    this.episodesPerPage = e.target.value === 'all' ? this.episodes.length : parseInt(e.target.value);
+                    this.currentPage = 1;
+                    this.applyFilters();
+                });
+                
+                // Filter tags
+                document.querySelectorAll('.filter-tag').forEach(tag => {
+                    tag.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        
+                        document.querySelectorAll('.filter-tag').forEach(t => t.classList.remove('active'));
+                        tag.classList.add('active');
+                        
+                        const filter = tag.getAttribute('data-filter');
+                        this.applyQuickFilter(filter);
+                    });
+                });
+            }
+            
+            populateFilters() {
+                const seasonFilter = document.getElementById('seasonFilter');
+                const seasons = [...new Set(this.episodes.map(ep => ep.season))].sort((a, b) => a - b);
+                
+                seasonFilter.innerHTML = '<option value="">Todas</option>';
+                seasons.forEach(season => {
+                    seasonFilter.innerHTML += `<option value="${season}">Temporada ${season}</option>`;
+                });
+                
+                this.updateStats();
+            }
+            
+            updateStats() {
+                const stats = {
+                    total: this.episodes.length,
+                    seasons: new Set(this.episodes.map(ep => ep.season)).size,
+                    views: this.episodes.reduce((sum, ep) => sum + (ep.views || 0), 0),
+                    featured: this.episodes.filter(ep => ep.featured).length
+                };
+                
+                this.animateCounter('totalEpisodes', stats.total);
+                this.animateCounter('totalSeasons', stats.seasons);
+                this.animateCounter('totalViews', stats.views);
+                this.animateCounter('featuredEpisodes', stats.featured);
+            }
+            
+            animateCounter(elementId, targetValue) {
+                const element = document.getElementById(elementId);
+                if (!element) return;
+                
+                let current = 0;
+                const increment = targetValue / 30;
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= targetValue) {
+                        current = targetValue;
+                        clearInterval(timer);
+                    }
+                    element.textContent = Math.floor(current).toLocaleString();
+                }, 50);
+            }
+            
+            applyQuickFilter(filter) {
+                switch (filter) {
+                    case 'all':
+                        this.currentFilters = { search: '', season: '', sort: 'newest', show: 'all' };
+                        break;
+                    case 'featured':
+                        this.currentFilters.show = 'featured';
+                        break;
+                    case 'new':
+                        this.currentFilters.show = 'new';
+                        break;
+                    case 'season1':
+                        this.currentFilters.season = '1';
+                        break;
+                }
+                
+                this.updateFormFilters();
+                this.applyFilters();
+            }
+            
+            updateFormFilters() {
+                document.getElementById('searchInput').value = this.currentFilters.search;
+                document.getElementById('seasonFilter').value = this.currentFilters.season;
+                document.getElementById('sortFilter').value = this.currentFilters.sort;
+                document.getElementById('showFilter').value = this.currentFilters.show;
+            }
+            
+            applyFilters() {
+                this.filteredEpisodes = this.episodes.filter(episode => {
+                    // Filtro de búsqueda
+                    const matchesSearch = !this.currentFilters.search ||
+                        episode.title.toLowerCase().includes(this.currentFilters.search) ||
+                        episode.description.toLowerCase().includes(this.currentFilters.search);
+                    
+                    // Filtro de temporada
+                    const matchesSeason = !this.currentFilters.season ||
+                        episode.season.toString() === this.currentFilters.season;
+                    
+                    // Filtro de tipo
+                    let matchesShow = true;
+                    if (this.currentFilters.show === 'featured') {
+                        matchesShow = episode.featured;
+                    } else if (this.currentFilters.show === 'new') {
+                        const episodeDate = new Date(episode.createdAt || episode.subtitleDate);
+                        const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+                        matchesShow = episodeDate > sevenDaysAgo;
+                    }
+                    
+                    return matchesSearch && matchesSeason && matchesShow;
+                });
+                
+                this.sortEpisodes();
+                this.currentPage = 1;
+                this.renderEpisodes();
+                this.renderPagination();
+            }
+            
+            sortEpisodes() {
+                switch (this.currentFilters.sort) {
+                    case 'newest':
+                        this.filteredEpisodes.sort((a, b) => new Date(b.createdAt || b.subtitleDate) - new Date(a.createdAt || a.subtitleDate));
+                        break;
+                    case 'oldest':
+                        this.filteredEpisodes.sort((a, b) => new Date(a.createdAt || a.subtitleDate) - new Date(b.createdAt || b.subtitleDate));
+                        break;
+                    case 'season':
+                        this.filteredEpisodes.sort

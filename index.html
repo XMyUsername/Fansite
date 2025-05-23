@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Joshua Plata Subs - Los mejores subtítulos de Shin-chan en español">
+    <title>🎭 Joshua Plata Subs - Los mejores subtítulos de Shin-chan</title>
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One:wght@400&family=Comic+Neue:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --joshua-red: #ff4444;
+            --joshua-yellow: #ffdd44;
+            --joshua-blue: #4488ff;
+        }
+        
+        body {
+            font-family: 'Comic Neue', cursive, sans-serif;
+            margin: 0;
+            padding: 0;
+            /* Background simple pero hermoso */
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+        
+        /* Preloader SIMPLE */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        
+        .shin-chan-loader {
+            font-size: 6rem;
+            animation: dance 1s ease-in-out infinite;
+            margin-bottom: 2rem;
+        }
+        
+        @keyframes dance {
+            0%, 100% { transform: rotate(-5deg) scale(1); }
+            50% { transform: rotate(5deg) scale(1.1); }
+        }
+        
+        .loaded #preloader {
+            display: none !important;
+        }
+        
+        /* Navbar */
+        .navbar {
+            background: linear-gradient(90deg, var(--joshua-red), #ff8844) !important;
+            transition: all 0.3s ease;
+        }
+        
+        .navbar-scrolled {
+            background: rgba(255, 68, 68, 0.95) !important;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+        
+        .brand-text {
+            font-family: 'Fredoka One', cursive;
+            color: white;
+            font-size: 1.4rem;
+            text-shadow: 2px 2px 0px #ffdd44;
+        }
+        
+        .nav-link {
+            color: white !important;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            background: var(--joshua-yellow) !important;
+            color: #333 !important;
+            border-radius: 20px;
+            transform: translateY(-2px);
+        }
+        
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, rgba(0,0,0,0.7), rgba(0,0,0,0.5)), 
+                        url('https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=1920') center/cover;
+            color: white;
+            text-align: center;
+            padding: 8rem 0 6rem;
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+        }
+        
+        .hero-section h1 {
+            font-family: 'Fredoka One', cursive;
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 3px 3px 0px rgba(0,0,0,0.5);
+            background: linear-gradient(45deg, #fff, var(--joshua-yellow));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .hero-section .lead {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+        
+        /* Buttons */
+        .btn-primary {
+            background: linear-gradient(135deg, var(--joshua-red), #ff8844);
+            border: 3px solid var(--joshua-yellow);
+            border-radius: 25px;
+            font-family: 'Fredoka One', cursive;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(255,68,68,0.4);
+        }
+        
+        /* Cards */
+        .episode-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            overflow: hidden;
+            background: white;
+        }
+        
+        .episode-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        
+        .episode-overlay {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+        }
+        
+        .episode-card:hover .episode-overlay {
+            opacity: 1;
+        }
+        
+        /* Counters */
+        .counter-section {
+            background: linear-gradient(135deg, var(--joshua-red), #ff8844);
+            color: white;
+            padding: 4rem 0;
+        }
+        
+        .counter-item {
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .counter-value {
+            font-family: 'Fredoka One', cursive;
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .counter-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            opacity: 0.9;
+        }
+        
+        /* Newsletter */
+        .newsletter-section {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 4rem 0;
+        }
+        
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            padding: 3rem 0 1rem;
+            position: relative;
+        }
+        
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--joshua-red), var(--joshua-yellow), var(--joshua-blue));
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-section h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-section .lead {
+                font-size: 1.25rem;
+            }
+            
+            .counter-value {
+                font-size: 2.5rem;
+            }
+        }
+        
+        /* Animations */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        
+        .animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="shin-chan-loader">🕺</div>
+        <p class="fs-5 mt-3">Preparando los mejores subtítulos...</p>
+        <div class="spinner-border text-warning mt-2" role="status">
+            <span class="visually-hidden">Cargando...</span>
+        </div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <i class="fas fa-film fa-2x me-2 text-warning"></i>
+                <span class="brand-text">Joshua Plata Subs</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.html">
+                            <i class="fas fa-home me-1"></i> Inicio
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="episodios.html">
+                            <i class="fas fa-film me-1"></i> Episodios
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="acerca.html">
+                            <i class="fas fa-info-circle me-1"></i> Acerca de
+                        </a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center gap-2">
+                    <div class="search-box">
+                        <input type="text" id="quickSearch" class="form-control" placeholder="Buscar episodios...">
+                    </div>
+                    <button class="btn btn-outline-light" id="themeToggle">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 text-center">
+                    <h1 class="animate-on-scroll">Joshua Plata Subs</h1>
+                    <p class="lead animate-on-scroll">Los mejores subtítulos de Shin-chan en español, hechos con amor y dedicación</p>
+                    <div class="btn-group animate-on-scroll" role="group">
+                        <a href="#episodios" class="btn btn-primary btn-lg">
+                            <i class="fas fa-play me-2"></i> Ver Episodios
+                        </a>
+                        <a href="#newsletter" class="btn btn-outline-light btn-lg">
+                            <i class="fas fa-bell me-2"></i> Suscribirse
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Episodios Destacados -->
+    <section id="episodios" class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center mb-5">
+                    <h2 class="animate-on-scroll" style="font-family: 'Fredoka One', cursive; color: var(--joshua-red);">
+                        🎬 Episodios Destacados
+                    </h2>
+                    <p class="lead text-muted animate-on-scroll">Los episodios más populares subtitulados por Joshua</p>
+                </div>
+            </div>
+            <div class="row featured-episodes">
+                <!-- Los episodios se cargarán aquí dinámicamente -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Contadores -->
+    <section class="counter-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="counter-item animate-on-scroll">
+                        <div class="counter-value" id="episodeCounter" data-count="0">0</div>
+                        <div class="counter-title">Episodios Subtitulados</div>
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <div class="counter-item animate-on-scroll">
+                        <div class="counter-value" id="seasonCounter" data-count="0">0</div>
+                        <div class="counter-title">Temporadas Disponibles</div>
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <div class="counter-item animate-on-scroll">
+                        <div class="counter-value" id="viewCounter" data-count="0">0</div>
+                        <div class="counter-title">Visualizaciones Totales</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section id="newsletter" class="newsletter-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-6 text-center">
+                    <h2 class="mb-3" style="font-family: 'Fredoka One', cursive;">
+                        📢 ¡No te pierdas ningún episodio!
+                    </h2>
+                    <p class="mb-4">Suscríbete para recibir notificaciones cuando Joshua suba nuevos episodios</p>
+                    <form id="newsletterForm" class="d-flex gap-2">
+                        <input type="email" id="emailInput" class="form-control" placeholder="tu@email.com" required>
+                        <button type="submit" class="btn btn-warning">
+                            <i class="fas fa-bell me-1"></i> Suscribirse
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer position-relative">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 mb-4">
+                    <h5 style="font-family: 'Fredoka One', cursive; color: var(--joshua-yellow);">
+                        Joshua Plata Subs
+                    </h5>
+                    <p class="text-light">Subtítulos de calidad para los episodios de Shin-chan. Hecho con ❤️ por Joshua Plata.</p>
+                    <div class="social-icons">
+                        <a href="#" class="text-light me-3"><i class="fab fa-youtube fa-2x"></i></a>
+                        <a href="#" class="text-light me-3"><i class="fab fa-telegram fa-2x"></i></a>
+                        <a href="#" class="text-light me-3"><i class="fab fa-discord fa-2x"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-6 mb-4">
+                    <h5>Enlaces</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="episodios.html" class="text-light">Todos los episodios</a></li>
+                        <li><a href="acerca.html" class="text-light">Acerca de Joshua</a></li>
+                        <li><a href="#" id="adminLink" class="text-light">Área de administración</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="border-light">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <p class="mb-0">&copy; 2025 Joshua Plata Subs. Hecho con ❤️ para los fans de Shin-chan</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="js/main-fixed.js"></script>
+    
+    <!-- Script para ocultar preloader GARANTIZADO -->
+    <script>
+        // Forzar ocultación del preloader
+        setTimeout(function() {
+            const preloader = document.getElementById('preloader');
+            if (preloader) {
+                preloader.style.display = 'none';
+                document.body.classList.add('loaded');
+                document.body.style.overflow = 'auto';
+            }
+        }, 1500);
+        
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                const preloader = document.getElementById('preloader');
+                if (preloader) {
+                    preloader.style.display = 'none';
+                    document.body.classList.add('loaded');
+                    document.body.style.overflow = 'auto';
+                }
+            }, 500);
+        });
+        
+        // Animaciones al scroll
+        document.addEventListener('DOMContentLoaded', function() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-in');
+                    }
+                });
+            });
+
+            document.querySelectorAll('.animate-on-scroll').forEach(el => {
+                observer.observe(el);
+            });
+            
+            // Navbar scroll effect
+            window.addEventListener('scroll', () => {
+                const navbar = document.querySelector('.navbar');
+                if (window.scrollY > 100) {
+                    navbar.classList.add('navbar-scrolled');
+                } else {
+                    navbar.classList.remove('navbar-scrolled');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
